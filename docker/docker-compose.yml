@@ -1,0 +1,18 @@
+version: '3'
+services:
+  httpdvue:
+    container_name: httpdvuecontainer
+    build:
+      context: ../
+      dockerfile: ./docker/httpdvue/Dockerfile
+    image: httpdvueimage
+    ports:
+      - 8080:80
+    volumes:
+      - ../src/htdocs:/usr/local/apache2/htdocs
+      - ../src/assets:/usr/local/apache2/assets
+      # - node_modules_vueapp:/app/node_modules
+    # command: npm run dev
+
+# volumes:
+#   node_modules_vueapp:
