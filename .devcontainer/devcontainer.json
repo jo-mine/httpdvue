@@ -1,0 +1,15 @@
+{
+	"name": "httpdvue",
+	"dockerComposeFile": "../docker/docker-compose.yml",
+	"service": "httpdvue",
+	"workspaceFolder": "/usr/local/apache2",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Vue.volar",
+				"Vue.vscode-typescript-vue-plugin",
+				"rvest.vs-code-prettier-eslint"
+			],
+		}
+	},
+}
