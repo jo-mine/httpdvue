@@ -40,3 +40,47 @@ const getForecastList = async (latitude: string|number, longitude: string|number
     })
     return result
 }
+
+interface ISearchPostCodeResult {
+    message: string|null;
+    results: IAddressBase[] | null;
+    status: string;
+}
+
+interface IAddressBase {
+    address1: string;
+    address2: string;
+    address3: string;
+    kana1: string;
+    kana2: string;
+    kana3: string;
+    prefcode: string;
+    zipcode: string;
+}
+
+const searchPostcode = (postcode: string): Promise<IAddressBase[]> => {
+    const url = "https://zipcloud.ibsnet.co.jp/api/search";
+    const data = {
+        zipcode: postcode
+    }
+    const settings = {
+        data,
+    }
+    return new Promise((resolve, reject) => {
+        $.ajax(url, settings).then((_result: string) => {
+            const result = JSON.parse(_result) as ISearchPostCodeResult
+            console.log(result);
+            
+            if (result.status != '200') {
+                reject(result.message+result.status)
+                return
+            }
+            if (!result.results?.length) {
+                reject('条件に合致する郵便番号が存在しません。')
+                return
+            }
+            resolve(result.results)
+            return
+        })
+    })
+}

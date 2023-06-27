@@ -1,5 +1,5 @@
-import {sprintf as _sprintf} from "sprintf";
-
+import jQuery from 'jquery'
 declare global {
-    var sprintf: _sprintf
+    var $: jQuery
 }
+export {}

@@ -41,3 +41,29 @@ const getForecastList = (latitude, longitude) => __awaiter(this, void 0, void 0,
     });
     return result;
 });
+const searchPostcode = (postcode) => {
+    const url = "https://zipcloud.ibsnet.co.jp/api/search";
+    const data = {
+        zipcode: postcode
+    };
+    const settings = {
+        data,
+    };
+    return new Promise((resolve, reject) => {
+        $.ajax(url, settings).then((_result) => {
+            var _a;
+            const result = JSON.parse(_result);
+            console.log(result);
+            if (result.status != '200') {
+                reject(result.message + result.status);
+                return;
+            }
+            if (!((_a = result.results) === null || _a === void 0 ? void 0 : _a.length)) {
+                reject('条件に合致する郵便番号が存在しません。');
+                return;
+            }
+            resolve(result.results);
+            return;
+        });
+    });
+};

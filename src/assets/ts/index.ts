@@ -1,54 +1,57 @@
-
-
-interface IHelloWorld {
-    text: string;
-    time: string;
+let searchHistoryId = 1;
+interface IAddress extends IAddressBase {
+    searchHistoryId: number;
+    searchDatetime: string;
+    errMessage?: string;
 }
-
-const helloworld: IHelloWorld = {
-    text: 'helloworld',
-    time: moment().format('yyyy-MM-DD')
-}
-console.log(helloworld)
-
-interface IForcast {
-    time: string;
-    temperature: string;
-}
-
 const vueApp = Vue.extend({
     data() {
         return {
-            message: '東京の天気',
-            forecastList: [] as IForcast[],
-            dialog: {title: "", message: "", isActive: false}
+            postcode: '7390402',
+            addressList: [] as IAddress[],
+            selectedSearchHistoryId: null as (null|number)
         }
     },
     methods: {
-        alertForecast(forecast: IForcast) {
-            console.log(`${forecast.time}の東京の気温は${forecast.temperature}℃です！`)
-            this.dialog.title = 'お天気メッセージ'
-            this.dialog.message = `${forecast.time}の東京の気温は${forecast.temperature}℃です！`
-            this.dialog.isActive = true
+        searchPostcode() {
+            searchPostcode(this.postcode).then(addressList => {
+                console.log([this.addressList, addressList]);
+                
+                this.addressList.unshift(...addressList.map(v => {
+                    return {
+                        searchDatetime: moment().format('yyyy-MM-DD HH:mm:ss'),
+                        searchHistoryId: searchHistoryId++,
+                        ...v
+                    }
+                }))
+            }).catch((errMessage: string) => {
+                this.addressList.unshift({
+                    address1: '',
+                    address2: '',
+                    address3: '',
+                    kana1: '',
+                    kana2: '',
+                    kana3: '',
+                    prefcode: '',
+                    zipcode: '',
+                    searchDatetime: moment().format('yyyy-MM-DD HH:mm:ss'),
+                    searchHistoryId: searchHistoryId++,
+                    errMessage
+                })
+            })
+        },
+        showSearchDetail(address: IAddress) {
+            console.log(address)
         }
     },
     computed: {
-        versionLabel() {
-            return `(Vue${Vue.version})`
+        selectedPostcode(): IAddress {
+            if (!this.selectedSearchHistoryId) {
+                return null
+            }
+            return this.addressList.find(v => v.searchHistoryId === this.selectedSearchHistoryId)
         }
     },
-    mounted() {
-        const prefecture = prefectureList[0];
-        getForecastList(prefecture.latitude, prefecture.longitude).then(forecastList => {
-            this.forecastList = forecastList.map(forecast => {
-                const _forcast:IForcast = {
-                    time: forecast.moment.format("yyyy-MM-DD HH:mm:ss"),
-                    temperature: sprintf("%2.1f", forecast.temperature)
-                }
-                return _forcast
-            })
-        })
-    }
 })
 
 new vueApp({

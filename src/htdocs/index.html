@@ -1,13 +1,24 @@
 <head>
+    <meta charset="utf-8"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.2/sprintf.min.js"></script>
 </head>
-<div id="app">
-    hello
-    {{ helloworld.text }}
-</div>
-<script src="/assets/js/libs/utils.js"></script>
-<script src="/assets/js/index.js"></script>
+<body>
+    <div id="app">
+        <div>
+            <input type="text" v-model="postcode" />
+            <button type="button" @click="searchPostcode">検索</button>
+        </div>
+        <div>
+            <div v-for="address in addressList" @click="showSearchDetail(address)"
+                style="padding: 8px;border:1px solid black;margin:4px;border-radius: 4px;">
+                [[ address.searchHistoryId ]]　[[ address.searchDatetime ]]　<span v-if="address.errMessage">[[ address.errMessage ]]</span><span v-else>[[ address.zipcode ]]</span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/assets/js/libs/utils.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/assets/js/index.js" charset="utf-8"></script>
+</body>
