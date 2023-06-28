@@ -41,11 +41,11 @@ const vueApp = Vue.extend({
             })
         },
         showSearchDetail(address: IAddress) {
-            console.log(address)
+            this.selectedSearchHistoryId = address.searchHistoryId
         }
     },
     computed: {
-        selectedPostcode(): IAddress {
+        selectedAddress(): IAddress|null {
             if (!this.selectedSearchHistoryId) {
                 return null
             }
