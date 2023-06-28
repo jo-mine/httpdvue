@@ -1,40 +1,51 @@
 html {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
+
 body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
+
 #app {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
+
 .padding {
-    padding: 8px;
+  padding: 8px;
 }
+
 .flex {
-    display: flex;
+  display: flex;
 }
+
 .flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
+
 .flex1 {
-    flex: 1;
+  flex: 1;
 }
+
 .flex-align-center {
-    align-items: center;
+  align-items: center;
 }
+
 .flex-between {
-    justify-content: space-between;
+  justify-content: space-between;
 }
+
 .flex-end {
-    justify-content: end;
+  justify-content: end;
 }
+
+/*# sourceMappingURL=common.css.map */

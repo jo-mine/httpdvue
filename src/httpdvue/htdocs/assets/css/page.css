@@ -1,0 +1,22 @@
+.page__postcode .search-history + .search-history {
+  margin-top: 4px;
+}
+.page__postcode .frame {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+.page__postcode .detail-area {
+  margin-left: 8px;
+}
+.page__postcode .search-area * + * {
+  margin-left: 8px;
+}
+.page__postcode .close-button {
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+/*# sourceMappingURL=page.css.map */

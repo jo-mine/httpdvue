@@ -1,0 +1,32 @@
+@import "__variables.scss";
+
+.page__postcode {
+    .search-history {
+        &+.search-history {
+            margin-top: $space0x;
+        }
+    }
+
+    .frame {
+        padding: $space1x;
+        border: 1px solid black;
+        border-radius: $space0x;
+    }
+
+    .detail-area {
+        margin-left: $space1x;
+    }
+
+    .search-area {
+        *+* {
+            margin-left: $space1x;
+        }
+    }
+
+    .close-button {
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 20px;
+        height: 20px;
+    }
+}
