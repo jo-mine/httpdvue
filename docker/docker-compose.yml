@@ -9,10 +9,40 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ../src/htdocs:/usr/local/apache2/htdocs
-      - ../src/assets:/usr/local/apache2/assets
-      # - node_modules_vueapp:/app/node_modules
-    # command: npm run dev
-
-# volumes:
-#   node_modules_vueapp:
+      - ../src/httpdvue/htdocs:/usr/local/apache2/htdocs
+      - ../src/httpdvue/assets:/usr/local/apache2/assets
+  php:
+    container_name: php
+    build:
+      context: ../
+      dockerfile: ./docker/php/Dockerfile
+    image: phpimage
+    volumes:
+      - ../src/php/html:/var/www/html
+    ports:
+      - 8081:80
+  db:
+    container_name: mariadb
+    image: mariadb:10.5.4
+    volumes:
+      - ./db/data:/var/lib/mysql
+    ports:
+      - 13306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: practicedb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      TZ: 'Asia/Tokyo'
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8082:80
+    environment:
+      - PMA_HOST=db
+      - PMA_VERBOSE=practicedb
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
