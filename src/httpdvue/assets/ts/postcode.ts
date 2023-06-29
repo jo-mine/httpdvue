@@ -13,10 +13,9 @@ const vueApp = Vue.extend({
         }
     },
     methods: {
-        searchPostcode() {
-            searchPostcode(this.postcode).then(addressList => {
-                console.log([this.addressList, addressList]);
-                
+        async searchPostcode() {
+            try {
+                const addressList = await searchPostcode(this.postcode)
                 this.addressList.unshift(...addressList.map(v => {
                     return {
                         searchDatetime: moment().format('yyyy-MM-DD HH:mm:ss'),
@@ -24,7 +23,8 @@ const vueApp = Vue.extend({
                         ...v
                     }
                 }))
-            }).catch((errMessage: string) => {
+            } catch (e: unknown) {
+                const errMessage =  e as string
                 this.addressList.unshift({
                     address1: '',
                     address2: '',
@@ -38,10 +38,20 @@ const vueApp = Vue.extend({
                     searchHistoryId: searchHistoryId++,
                     errMessage
                 })
-            })
+            }
         },
         showSearchDetail(address: IAddress) {
             this.selectedSearchHistoryId = address.searchHistoryId
+        },
+        async searchForecast() {
+            try {
+                console.log(this.selectedPrefecture);
+                
+                const forecastList = await getForecastList(this.selectedPrefecture.latitude, this.selectedPrefecture.longitude)
+                console.log(forecastList)
+            } catch(e) {
+                console.error(e)
+            }
         }
     },
     computed: {
@@ -50,6 +60,18 @@ const vueApp = Vue.extend({
                 return null
             }
             return this.addressList.find(v => v.searchHistoryId === this.selectedSearchHistoryId)
+        },
+        prefectureList(): IPrefecture[] {
+            return prefectureList
+        },
+        isPrefectureCdExistsInList(): boolean {
+            return this.prefectureList.some(v => v.prefecture_cd === this.selectedAddress.prefcode)
+        },
+        selectedPrefecture(): IPrefecture|null {
+            if(!this.isPrefectureCdExistsInList) {
+                return null
+            }
+            return this.prefectureList.find(v => v.prefecture_cd === this.selectedAddress.prefcode)
         }
     },
 })

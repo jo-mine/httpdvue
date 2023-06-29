@@ -49,3 +49,21 @@ body {
 .flex-end {
     justify-content: end;
 }
+
+.selectable {
+    &:hover {
+        background-color: gainsboro;
+    }
+
+    &:active {
+        background-color: gray;
+    }
+}
+
+button.button {
+    padding: $space0x
+}
+
+.pointer {
+    cursor: pointer;
+}

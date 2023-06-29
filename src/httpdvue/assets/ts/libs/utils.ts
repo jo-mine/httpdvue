@@ -7,9 +7,15 @@ const zip = (...argArrays: any[]) => {
     return result
 }
 
+interface IPrefecture {
+    prefecture_cd: string;
+    prefecture_name: string;
+    latitude: number;
+    longitude: number;
+}
 const prefectureList = [
-    { prefecture_cd: 'tokyo', prefecture_name: '東京', latitude: 35.6894, longitude: 139.6917 },
-    { prefecture_cd: 'yamaguchi', prefecture_name: '山口', latitude: 34.1859, longitude: 131.4706 },
+    { prefecture_cd: '13', prefecture_name: '東京', latitude: 35.6894, longitude: 139.6917 },
+    { prefecture_cd: '35', prefecture_name: '山口', latitude: 34.1859, longitude: 131.4706 },
 ]
 
 interface IBaseForcast {
@@ -69,7 +75,6 @@ const searchPostcode = (postcode: string): Promise<IAddressBase[]> => {
     return new Promise((resolve, reject) => {
         $.ajax(url, settings).then((_result: string) => {
             const result = JSON.parse(_result) as ISearchPostCodeResult
-            console.log(result);
             
             if (result.status != '200') {
                 reject(result.message+result.status)

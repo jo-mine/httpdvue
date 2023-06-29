@@ -48,4 +48,19 @@ body {
   justify-content: end;
 }
 
+.selectable:hover {
+  background-color: gainsboro;
+}
+.selectable:active {
+  background-color: gray;
+}
+
+button.button {
+  padding: 4px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=common.css.map */

@@ -18,14 +18,16 @@
         <div class="flex-column flex1 padding">
             <div class="flex flex1">
                 <div class="flex1">
-                    <div v-for="address in addressList" @click="showSearchDetail(address)" class="search-history frame">
+                    <div v-for="address in addressList" @click="showSearchDetail(address)"
+                        class="search-history frame selectable">
                         [[ address.searchHistoryId ]]　[[ address.searchDatetime ]]　<span v-if="address.errMessage">[[
                             address.errMessage ]]</span><span v-else>[[ address.zipcode ]]</span>
                     </div>
                 </div>
                 <div v-if="selectedAddress" class="frame detail-area">
                     <div class="flex flex-end">
-                        <button type="button" class="close-button" @click="selectedSearchHistoryId = null">x</button>
+                        <button type="button" class="close-button selectable"
+                            @click="selectedSearchHistoryId = null">x</button>
                     </div>
                     <dl>
                         <dt>住所</dt>
@@ -39,6 +41,9 @@
                         <dt>検索時間</dt>
                         <dd>[[ selectedAddress.searchDatetime ]]</dd>
                     </dl>
+                    <div class="selectable frame pointer" v-if="isPrefectureCdExistsInList" @click="searchForecast">
+                        気温検索
+                    </div>
                 </div>
             </div>
         </div>
