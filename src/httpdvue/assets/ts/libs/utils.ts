@@ -1,3 +1,17 @@
+
+Vue.component('customDialog', {
+    props: ['title', 'message', 'isActive'],
+    template: `
+        <div class="dialog" :class="{'active': isActive}">
+            <div class="dialog__title">[[ title ]]</div>
+            <div class="dialog__body">[[ message ]]</div>
+            <div class="dialog__button-area">
+                <button type="button" @click="$emit('close')">閉じる</button>
+            </div>
+        </div>
+    `,
+    delimiters: ["[[", "]]"],
+})
 const zip = (...argArrays: any[]) => {
     const max = Math.max(...argArrays.map(arr => arr.length ?? 0))
     const result = []
@@ -15,6 +29,7 @@ interface IPrefecture {
 }
 const prefectureList = [
     { prefecture_cd: '13', prefecture_name: '東京', latitude: 35.6894, longitude: 139.6917 },
+    { prefecture_cd: '34', prefecture_name: '広島', latitude: 34.2347, longitude: 131.2817 },
     { prefecture_cd: '35', prefecture_name: '山口', latitude: 34.1859, longitude: 131.4706 },
 ]
 

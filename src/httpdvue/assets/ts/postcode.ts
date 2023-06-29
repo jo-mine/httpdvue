@@ -9,7 +9,8 @@ const vueApp = Vue.extend({
         return {
             postcode: '7390402',
             addressList: [] as IAddress[],
-            selectedSearchHistoryId: null as (null|number)
+            selectedSearchHistoryId: null as (null|number),
+            dialog: {title: "", message: "", isActive: false}
         }
     },
     methods: {
@@ -48,6 +49,9 @@ const vueApp = Vue.extend({
                 console.log(this.selectedPrefecture);
                 
                 const forecastList = await getForecastList(this.selectedPrefecture.latitude, this.selectedPrefecture.longitude)
+                this.dialog.title = 'お天気メッセージ'
+                this.dialog.message = `${forecastList[0].moment.format('yyyy-MM-DD HH:mm:ss')} ${forecastList[0].temperature}`
+                this.dialog.isActive = true
                 console.log(forecastList)
             } catch(e) {
                 console.error(e)

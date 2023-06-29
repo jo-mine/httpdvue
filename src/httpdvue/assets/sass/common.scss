@@ -51,6 +51,8 @@ body {
 }
 
 .selectable {
+    cursor: pointer;
+
     &:hover {
         background-color: gainsboro;
     }

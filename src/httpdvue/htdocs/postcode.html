@@ -47,6 +47,8 @@
                 </div>
             </div>
         </div>
+        <custom-dialog :title="dialog.title" :message="dialog.message" :is-active="dialog.isActive"
+            @close="dialog.isActive = false"></custom-dialog>
     </div>
     <script type="text/javascript" src="/assets/js/libs/utils.js" charset="utf-8"></script>
     <script type="text/javascript" src="/assets/js/postcode.js" charset="utf-8"></script>

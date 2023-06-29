@@ -48,6 +48,9 @@ body {
   justify-content: end;
 }
 
+.selectable {
+  cursor: pointer;
+}
 .selectable:hover {
   background-color: gainsboro;
 }
