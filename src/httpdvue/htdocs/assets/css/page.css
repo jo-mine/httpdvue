@@ -5,6 +5,9 @@
   margin-left: 8px;
   width: 30%;
 }
+.page__postcode .detail-area .selectable.frame.pointer + .selectable.frame.pointer {
+  margin-top: 4px;
+}
 .page__postcode .search-area * + * {
   margin-left: 8px;
 }

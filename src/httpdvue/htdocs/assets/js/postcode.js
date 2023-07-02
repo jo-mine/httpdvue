@@ -50,23 +50,30 @@ const vueApp = Vue.extend({
         searchForecast() {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const forecastList = yield getForecastList(this.selectedPrefecture.latitude, this.selectedPrefecture.longitude);
-                    const todayForecastList = forecastList.filter(v => {
-                        return v.moment.isSame(moment(), 'day');
-                    });
-                    const min = Math.min(...todayForecastList.map(v => Number(v.temperature)));
-                    const max = Math.max(...todayForecastList.map(v => Number(v.temperature)));
-                    const sum = todayForecastList.reduce((carry, v) => {
-                        return carry + Number(v.temperature);
-                    }, 0);
-                    const average = sum / todayForecastList.length;
+                    const openMeteo = new OpenMeteo(this.selectedPrefecture.latitude, this.selectedPrefecture.longitude);
+                    const hourlyTemperatureList = yield openMeteo.getHourlyTemperatureList();
                     this.dialog.title = 'お天気メッセージ';
-                    this.dialog.message = `${moment().format('yyyy-MM-DD')}の気温<br />
-                最高: ${max}℃<br />
-                平均: ${sprintf("%.1f", average)}℃<br />
-                最低: ${min}℃`;
+                    this.dialog.message = `${moment().format('yyyy-MM-DD')}の気温<br />`;
+                    this.dialog.message += hourlyTemperatureList.filter(v => v.moment.isSame(moment(), "day")).map(v => `${v.moment.format("HH")}時: ${sprintf("%.1f", v.temperature)}℃`).join("<br />");
                     this.dialog.isActive = true;
-                    console.log(forecastList);
+                }
+                catch (e) {
+                    console.error(e);
+                }
+            });
+        },
+        searchForecast2() {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const openMeteo = new OpenMeteo(this.selectedPrefecture.latitude, this.selectedPrefecture.longitude);
+                    const temperatureListDaily = yield openMeteo.getDailyTemperatureList();
+                    this.dialog.title = 'お天気メッセージ';
+                    this.dialog.message = temperatureListDaily.map(v => {
+                        return `${v.moment.format('yyyy-MM-DD')}の気温<br />
+                　最高: ${sprintf("%.1f", v.max)}℃<br />
+                　最低: ${sprintf("%.1f", v.min)}℃`;
+                    }).join("<br />");
+                    this.dialog.isActive = true;
                 }
                 catch (e) {
                     console.error(e);

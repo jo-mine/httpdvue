@@ -10,6 +10,12 @@
     .detail-area {
         margin-left: $space1x;
         width: 30%;
+
+        .selectable.frame.pointer {
+            +.selectable.frame.pointer {
+                margin-top: $space0x;
+            }
+        }
     }
 
     .search-area {

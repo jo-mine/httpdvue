@@ -41,28 +41,75 @@ interface IBaseForcast {
     temperature: string;
 }
 
-const getForecastList = async (latitude: string|number, longitude: string|number): Promise<IBaseForcast[]> => {
-    const url = "https://api.open-meteo.com/v1/forecast";
-    const data = {
-        latitude,
-        longitude,
-        timezone: "Asia/Tokyo",
-        hourly: "temperature_2m",
-    }
-    const settings = {
-        data,
-    }
-    const ajaxResult = await $.ajax(url, settings)
-    const times = ajaxResult.hourly.time
-    const temperatures = ajaxResult.hourly.temperature_2m
+interface ITemperatureDaily {
+    moment: moment.Moment;
+    max: string;
+    min: string;
+}
 
-    const result = zip(times, temperatures).map(([time, temperature]) => {
-        return {
-            moment: moment(time),
-            temperature: temperature as string,
+class OpenMeteo {
+    private latitude: string|number;
+    private longitude: string|number;
+
+    constructor(latitude: string|number, longitude: string|number) {
+        this.latitude = latitude
+        this.longitude = longitude
+    }
+
+    private requestOpenMeteo = async (params: Object): Promise<any> => {
+        const url = "https://api.open-meteo.com/v1/forecast";
+        const settings = {
+            data: {
+                ...params,
+            },
         }
-    })
-    return result
+        return await $.ajax(url, settings)
+    }
+
+    private getCommonParams (): Object {
+        return {
+            latitude: this.latitude,
+            longitude: this.longitude,
+            timezone: "Asia/Tokyo",
+        }
+    }
+
+    public async getDailyTemperatureList(): Promise<ITemperatureDaily[]> {
+        const params = {
+            ...this.getCommonParams(),
+            daily: "temperature_2m_max,temperature_2m_min"
+        }
+        const ajaxResult = await this.requestOpenMeteo(params)
+        const times = ajaxResult.daily.time
+        const maxs = ajaxResult.daily.temperature_2m_max
+        const mins = ajaxResult.daily.temperature_2m_min
+        const result = zip(times, maxs, mins).map(([time, max, min]) => {
+            return {
+                moment: moment(time),
+                max,
+                min
+            }
+        })
+        return result
+    }
+
+    public async getHourlyTemperatureList(): Promise<IBaseForcast[]> {
+        const params = {
+            ...this.getCommonParams(),
+            hourly: "temperature_2m",
+        }
+        const ajaxResult = await this.requestOpenMeteo(params)
+        const times = ajaxResult.hourly.time
+        const temperatures = ajaxResult.hourly.temperature_2m
+
+        const result = zip(times, temperatures).map(([time, temperature]) => {
+            return {
+                moment: moment(time),
+                temperature: temperature as string,
+            }
+        })
+        return result
+    }
 }
 
 interface ISearchPostCodeResult {

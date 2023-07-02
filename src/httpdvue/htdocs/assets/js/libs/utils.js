@@ -36,28 +36,58 @@ const prefectureList = [
     { prefecture_cd: '34', prefecture_name: '広島', latitude: 34.2347, longitude: 131.2817 },
     { prefecture_cd: '35', prefecture_name: '山口', latitude: 34.1859, longitude: 131.4706 },
 ];
-const getForecastList = (latitude, longitude) => __awaiter(this, void 0, void 0, function* () {
-    const url = "https://api.open-meteo.com/v1/forecast";
-    const data = {
-        latitude,
-        longitude,
-        timezone: "Asia/Tokyo",
-        hourly: "temperature_2m",
-    };
-    const settings = {
-        data,
-    };
-    const ajaxResult = yield $.ajax(url, settings);
-    const times = ajaxResult.hourly.time;
-    const temperatures = ajaxResult.hourly.temperature_2m;
-    const result = zip(times, temperatures).map(([time, temperature]) => {
+class OpenMeteo {
+    constructor(latitude, longitude) {
+        this.requestOpenMeteo = (params) => __awaiter(this, void 0, void 0, function* () {
+            const url = "https://api.open-meteo.com/v1/forecast";
+            const settings = {
+                data: Object.assign({}, params),
+            };
+            return yield $.ajax(url, settings);
+        });
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+    getCommonParams() {
         return {
-            moment: moment(time),
-            temperature: temperature,
+            latitude: this.latitude,
+            longitude: this.longitude,
+            timezone: "Asia/Tokyo",
         };
-    });
-    return result;
-});
+    }
+    getDailyTemperatureList() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const params = Object.assign(Object.assign({}, this.getCommonParams()), { daily: "temperature_2m_max,temperature_2m_min" });
+            const ajaxResult = yield this.requestOpenMeteo(params);
+            const times = ajaxResult.daily.time;
+            const maxs = ajaxResult.daily.temperature_2m_max;
+            const mins = ajaxResult.daily.temperature_2m_min;
+            const result = zip(times, maxs, mins).map(([time, max, min]) => {
+                return {
+                    moment: moment(time),
+                    max,
+                    min
+                };
+            });
+            return result;
+        });
+    }
+    getHourlyTemperatureList() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const params = Object.assign(Object.assign({}, this.getCommonParams()), { hourly: "temperature_2m" });
+            const ajaxResult = yield this.requestOpenMeteo(params);
+            const times = ajaxResult.hourly.time;
+            const temperatures = ajaxResult.hourly.temperature_2m;
+            const result = zip(times, temperatures).map(([time, temperature]) => {
+                return {
+                    moment: moment(time),
+                    temperature: temperature,
+                };
+            });
+            return result;
+        });
+    }
+}
 const searchPostcode = (postcode) => {
     const url = "https://zipcloud.ibsnet.co.jp/api/search";
     const data = {
