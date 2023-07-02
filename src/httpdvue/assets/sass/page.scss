@@ -7,14 +7,9 @@
         }
     }
 
-    .frame {
-        padding: $space1x;
-        border: 1px solid black;
-        border-radius: $space0x;
-    }
-
     .detail-area {
         margin-left: $space1x;
+        width: 30%;
     }
 
     .search-area {
@@ -23,40 +18,20 @@
         }
     }
 
+    .frame {
+        padding: $space1x;
+        border: 1px solid black;
+        border-radius: $space0x;
+    }
+
+    .disabled {
+        background-color: gray;
+    }
+
     .close-button {
         border: 1px solid black;
         border-radius: 10px;
         width: 20px;
         height: 20px;
-    }
-}
-
-.dialog {
-    display: none;
-    position: absolute;
-    border: 1px solid black;
-    border-radius: 4px;
-    padding: 4px;
-    left: 50%;
-    top: 50%;
-    background-color: white;
-    transform: translateX(-50%) translateY(-50%);
-
-    &.active {
-        display: block;
-    }
-
-    &>*:not(:last-child) {
-        border-bottom: 1px solid black;
-        padding: 4px;
-    }
-
-    .dialog__title {}
-
-    .dialog__message {}
-
-    .dialog__button-area {
-        display: flex;
-        justify-content: end;
     }
 }

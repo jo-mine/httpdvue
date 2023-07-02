@@ -46,11 +46,21 @@ const vueApp = Vue.extend({
         },
         async searchForecast() {
             try {
-                console.log(this.selectedPrefecture);
-                
                 const forecastList = await getForecastList(this.selectedPrefecture.latitude, this.selectedPrefecture.longitude)
+                const todayForecastList = forecastList.filter(v => {
+                    return v.moment.isSame(moment(), 'day')
+                })
+                const min = Math.min(...todayForecastList.map(v => Number(v.temperature)))
+                const max = Math.max(...todayForecastList.map(v => Number(v.temperature)))
+                const sum = todayForecastList.reduce((carry, v) => {
+                    return carry + Number(v.temperature)
+                }, 0)
+                const average = sum / todayForecastList.length
                 this.dialog.title = 'お天気メッセージ'
-                this.dialog.message = `${forecastList[0].moment.format('yyyy-MM-DD HH:mm:ss')} ${forecastList[0].temperature}`
+                this.dialog.message = `${moment().format('yyyy-MM-DD')}の気温<br />
+                最高: ${max}℃<br />
+                平均: ${sprintf("%.1f", average)}℃<br />
+                最低: ${min}℃`
                 this.dialog.isActive = true
                 console.log(forecastList)
             } catch(e) {

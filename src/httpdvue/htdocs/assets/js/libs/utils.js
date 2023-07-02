@@ -11,10 +11,13 @@ Vue.component('customDialog', {
     props: ['title', 'message', 'isActive'],
     template: `
         <div class="dialog" :class="{'active': isActive}">
-            <div class="dialog__title">[[ title ]]</div>
-            <div class="dialog__body">[[ message ]]</div>
-            <div class="dialog__button-area">
-                <button type="button" @click="$emit('close')">閉じる</button>
+            <div class="dialog__background" @click="$emit('close')"></div>
+            <div class="dialog__main">
+                <div class="dialog__main__title">[[ title ]]</div>
+                <div class="dialog__main__body" v-html="message"></div>
+                <div class="dialog__main__button-area">
+                    <div class="button selectable" @click="$emit('close')">閉じる</div>
+                </div>
             </div>
         </div>
     `,

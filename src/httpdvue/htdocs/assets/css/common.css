@@ -58,12 +58,60 @@ body {
   background-color: gray;
 }
 
-button.button {
+.button {
   padding: 4px;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.dialog {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.dialog.active {
+  display: block;
+}
+.dialog .dialog__background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(100, 100, 100, 0.5);
+}
+.dialog .dialog__main {
+  position: absolute;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 4px;
+  left: 50%;
+  top: 50%;
+  background-color: white;
+  transform: translateX(-50%) translateY(-50%);
+  width: 50%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.dialog .dialog__main > * {
+  padding: 4px;
+}
+.dialog .dialog__main > *:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+.dialog .dialog__main .dialog__main__body {
+  flex: 1;
+  overflow-y: auto;
+}
+.dialog .dialog__main .dialog__main__button-area {
+  display: flex;
+  justify-content: end;
+}
+.dialog .dialog__main .dialog__main__button-area .button {
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 /*# sourceMappingURL=common.css.map */

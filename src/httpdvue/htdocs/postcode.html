@@ -41,9 +41,10 @@
                         <dt>検索時間</dt>
                         <dd>[[ selectedAddress.searchDatetime ]]</dd>
                     </dl>
-                    <div class="selectable frame pointer" v-if="isPrefectureCdExistsInList" @click="searchForecast">
+                    <div v-if="isPrefectureCdExistsInList" class="selectable frame pointer" @click="searchForecast">
                         気温検索
                     </div>
+                    <div v-else class="disabled frame pointer">気温検索</div>
                 </div>
             </div>
         </div>
