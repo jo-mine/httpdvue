@@ -79,6 +79,9 @@ const vueApp = Vue.extend({
                     console.error(e);
                 }
             });
+        },
+        deleteHistory() {
+            this.addressList.splice(this.addressList.findIndex(v => v.searchHistoryId === this.selectedAddress.searchHistoryId), 1);
         }
     },
     computed: {

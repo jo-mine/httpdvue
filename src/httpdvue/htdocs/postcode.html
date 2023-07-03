@@ -50,6 +50,9 @@
                         </div>
                     </template>
                     <div v-else class="disabled frame pointer">気温検索</div>
+                    <div class="selectable frame pointer" @click="deleteHistory">
+                        検索履歴削除
+                    </div>
                 </div>
             </div>
         </div>

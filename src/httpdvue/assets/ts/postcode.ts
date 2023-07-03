@@ -70,6 +70,9 @@ const vueApp = Vue.extend({
             } catch(e) {
                 console.error(e)
             }
+        },
+        deleteHistory() {
+            this.addressList.splice(this.addressList.findIndex(v => v.searchHistoryId === this.selectedAddress.searchHistoryId), 1)
         }
     },
     computed: {
