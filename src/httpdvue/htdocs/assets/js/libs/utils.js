@@ -13,7 +13,7 @@ Vue.component('customDialog', {
         <div class="dialog" :class="{'active': isActive}">
             <div class="dialog__background" @click="$emit('close')"></div>
             <div class="dialog__main">
-                <div class="dialog__main__title">[[ title ]]</div>
+                <div class="dialog__main__title" v-if="title">[[ title ]]</div>
                 <div class="dialog__main__body" v-html="message"></div>
                 <div class="dialog__main__button-area">
                     <div class="button selectable" @click="$emit('close')">閉じる</div>

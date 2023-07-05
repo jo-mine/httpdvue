@@ -24,12 +24,6 @@
         }
     }
 
-    .frame {
-        padding: $space1x;
-        border: 1px solid black;
-        border-radius: $space0x;
-    }
-
     .disabled {
         background-color: gray;
     }
@@ -39,5 +33,49 @@
         border-radius: 10px;
         width: 20px;
         height: 20px;
+    }
+}
+
+.page__todo {
+    .add-area {
+        width: 100%;
+
+        label+* {
+            margin-left: $space0x;
+        }
+
+        >*+* {
+            margin-top: $space0x;
+        }
+    }
+
+    .column {
+        &__done {
+            width: 100px;
+        }
+
+        &__limit {
+            flex: 1;
+        }
+
+        &__text {
+            flex: 3;
+        }
+    }
+
+    .todo-list {
+
+        &__header,
+        &__todo {
+            >*+* {
+                margin-left: $space1x;
+            }
+        }
+
+        &__body {
+            flex-grow: 1;
+            flex-basis: 0;
+            overflow-y: auto;
+        }
     }
 }

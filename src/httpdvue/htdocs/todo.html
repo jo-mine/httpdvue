@@ -1,0 +1,68 @@
+<head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.2/sprintf.min.js"></script>
+    <link href="/assets/css/common.css" rel="stylesheet">
+    <link href="/assets/css/page.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app" class="page__todo flex-column">
+        <div class="padding flex">
+            <div class="frame add-area flex1">
+                <div class="flex">
+                    <label for="todo-text">内容</label>
+                    <input type="text" v-model="todoText" id="todo-text" class="flex1" @keypress.enter="addTodo" />
+                </div>
+                <div class="flex">
+                    <label for="todo-limit">期限</label>
+                    <input type="date" v-model="todoLimit" id="todo-limit" class="flex1" />
+                </div>
+                <div class="flex flex-end">
+                    <button type="button" @click="addTodo">追加</button>
+                </div>
+            </div>
+        </div>
+        <div class="padding">
+            <div>
+                <input type="checkbox" v-model="showDoneTodo" id="show-done-todo" />
+                <label for="show-done-todo">完了済みを表示</label>
+            </div>
+        </div>
+        <div class="flex-column flex1 padding">
+            <div class="flex-column flex1">
+                <div class="frame flex1 todo-list flex-column">
+                    <div class="flex todo-list__header">
+                        <div class="column__done">完了</div>
+                        <div class="column__limit">期限</div>
+                        <div class="column__text">内容</div>
+                    </div>
+                    <div class="todo-list__body">
+                        <div v-for="todo in computedTodoList" :key="todo.id"
+                            class="flex flex-align-center todo-list__todo">
+                            <div class="column__done">
+                                <input type="checkbox" v-model="todo.isDone" :id="`done_${todo.id}`" />
+                            </div>
+                            <div class="column__limit">
+                                [[ todo.todoLimit ?? '期限なし' ]]
+                            </div>
+                            <div class="column__text">
+                                [[ todo.todoText ]]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="frame history-area">
+
+                </div> -->
+            </div>
+        </div>
+        <custom-dialog :title="dialog.title" :message="dialog.message" :is-active="dialog.isActive"
+            @close="dialog.isActive = false"></custom-dialog>
+    </div>
+    <script type="text/javascript" src="/assets/js/libs/utils.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/assets/js/todo.js" charset="utf-8"></script>
+</body>

@@ -11,11 +11,6 @@
 .page__postcode .search-area * + * {
   margin-left: 8px;
 }
-.page__postcode .frame {
-  padding: 8px;
-  border: 1px solid black;
-  border-radius: 4px;
-}
 .page__postcode .disabled {
   background-color: gray;
 }
@@ -24,6 +19,33 @@
   border-radius: 10px;
   width: 20px;
   height: 20px;
+}
+
+.page__todo .add-area {
+  width: 100%;
+}
+.page__todo .add-area label + * {
+  margin-left: 4px;
+}
+.page__todo .add-area > * + * {
+  margin-top: 4px;
+}
+.page__todo .column__done {
+  width: 100px;
+}
+.page__todo .column__limit {
+  flex: 1;
+}
+.page__todo .column__text {
+  flex: 3;
+}
+.page__todo .todo-list__header > * + *, .page__todo .todo-list__todo > * + * {
+  margin-left: 8px;
+}
+.page__todo .todo-list__body {
+  flex-grow: 1;
+  flex-basis: 0;
+  overflow-y: auto;
 }
 
 /*# sourceMappingURL=page.css.map */

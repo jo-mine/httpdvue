@@ -38,6 +38,14 @@ body {
     flex: 1;
 }
 
+.flex2 {
+    flex: 2;
+}
+
+.flex3 {
+    flex: 3;
+}
+
 .flex-align-center {
     align-items: center;
 }
@@ -126,4 +134,10 @@ body {
             }
         }
     }
+}
+
+.frame {
+    padding: $space1x;
+    border: 1px solid black;
+    border-radius: $space0x;
 }

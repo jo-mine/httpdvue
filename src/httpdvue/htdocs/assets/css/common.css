@@ -36,6 +36,14 @@ body {
   flex: 1;
 }
 
+.flex2 {
+  flex: 2;
+}
+
+.flex3 {
+  flex: 3;
+}
+
 .flex-align-center {
   align-items: center;
 }
@@ -110,6 +118,12 @@ body {
   justify-content: end;
 }
 .dialog .dialog__main .dialog__main__button-area .button {
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+.frame {
+  padding: 8px;
   border: 1px solid black;
   border-radius: 4px;
 }
