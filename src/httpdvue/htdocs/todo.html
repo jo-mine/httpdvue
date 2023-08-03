@@ -28,7 +28,7 @@
         </div>
         <div class="padding">
             <div>
-                <input type="checkbox" v-model="showDoneTodo" id="show-done-todo" />
+                <input type="checkbox" v-model="computedShowDoneTodo" id="show-done-todo" />
                 <label for="show-done-todo">完了済みを表示</label>
             </div>
         </div>
@@ -41,16 +41,17 @@
                         <div class="column__text">内容</div>
                     </div>
                     <div class="todo-list__body">
-                        <div v-for="todo in computedTodoList" :key="todo.id"
+                        <div v-for="todo in todoList" :key="todo.todo_id"
                             class="flex flex-align-center todo-list__todo">
                             <div class="column__done">
-                                <input type="checkbox" v-model="todo.isDone" :id="`done_${todo.id}`" />
+                                <input type="checkbox" :value="todo.done_flg" @change="toggleDone(todo)"
+                                    :id="`done_${todo.todo_id}`" />
                             </div>
                             <div class="column__limit">
-                                [[ todo.todoLimit ?? '期限なし' ]]
+                                [[ todo.limit_date ?? '期限なし' ]]
                             </div>
                             <div class="column__text">
-                                [[ todo.todoText ]]
+                                [[ todo.todo_detail ]]
                             </div>
                         </div>
                     </div>
@@ -63,6 +64,7 @@
         <custom-dialog :title="dialog.title" :message="dialog.message" :is-active="dialog.isActive"
             @close="dialog.isActive = false"></custom-dialog>
     </div>
+    <script type="text/javascript" src="/assets/js/libs/Server.js" charset="utf-8"></script>
     <script type="text/javascript" src="/assets/js/libs/utils.js" charset="utf-8"></script>
     <script type="text/javascript" src="/assets/js/todo.js" charset="utf-8"></script>
 </body>
